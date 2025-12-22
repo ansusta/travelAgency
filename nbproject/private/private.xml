@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/agencevoyage/Agencevoyage.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/agencevoyage/views/EmployePanel.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/controllers/ControllerClient.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/models/ModelVoyageOrganise.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/models/ModelTraitement.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/models/ModelVisaAffaires.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/controllers/ControllerVisaAffaires.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/agencevoyage/views/TraitementPanel.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/models/ModelClient.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/models/ModelVisaTravail.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/models/ModelVisaTouristique.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/agencevoyage/DataBaseConnection.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/models/ModelVisaEtudes.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/models/ModelReservationHotel.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/models/ModelExcursion.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/models/ModelBillet.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/models/ModelAssuranceVoyage.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/agencevoyage/views/ClientPanel.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/controllers/ControllerVisaEtudes.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/controllers/ControllerVisaTravail.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/controllers/ControllerVisaTouristique.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/agencevoyage/views/PartenariatPanel.java</file>
+        </group>
+    </open-files>
+</project-private>

@@ -1,0 +1,11 @@
+models.ModelReservationHotel
+models.ModelVisaTouristique
+models.ModelAssuranceVoyage
+models.ModelVisaEtudes
+models.ModelVisa
+models.ModelVisaTravail
+models.ModelVisaAffaires
+models.ModelVoyageOrganise
+models.ModelExcursion
+models.ModelBillets
+models.ModelTraitement
