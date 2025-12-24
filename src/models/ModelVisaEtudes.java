@@ -179,4 +179,13 @@ public static List<ModelVisaEtudes> getAllVisaEtudes() throws SQLException {
         connection.setAutoCommit(true);
     }
 }
+        
+        
+            
+    public static List<ModelVisa> searchVisaEtudes(String term) throws SQLException {
+    return searchVisa(
+        term,
+        "JOIN visa_etudes vt ON vt.idVisa = v.idVisa"
+    );
+}
 }

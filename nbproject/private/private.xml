@@ -7,7 +7,7 @@
             <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/agencevoyage/views/EmployePanel.java</file>
             <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/controllers/ControllerClient.java</file>
             <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/models/ModelVoyageOrganise.java</file>
-            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/models/ModelTraitement.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/models/ModelVisa.java</file>
             <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/models/ModelVisaAffaires.java</file>
             <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/controllers/ControllerVisaAffaires.java</file>
             <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/agencevoyage/views/TraitementPanel.java</file>
@@ -25,6 +25,8 @@
             <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/controllers/ControllerVisaTravail.java</file>
             <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/controllers/ControllerVisaTouristique.java</file>
             <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/agencevoyage/views/PartenariatPanel.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/agencevoyage/views/MainFrame.java</file>
+            <file>file:/C:/Users/tasusna/Documents/NetBeansProjects/agencevoyage/src/agencevoyage/views/ContratPanel.java</file>
         </group>
     </open-files>
 </project-private>

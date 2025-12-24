@@ -17,7 +17,9 @@ import com.github.lgooddatepicker.components.TimePicker;
 import controllers.*;
 
 public class TraitementPanel extends JPanel {
-    
+    private JTextField searchField;
+private String currentCategory;
+
     private final Font BUTTON_FONT = new Font("Segoe UI", Font.BOLD, 13);
     private final Color BUTTON_COLOR = new Color(30, 100, 200);
     private final Color BUTTON_HOVER = new Color(50, 120, 220);
@@ -71,6 +73,8 @@ public class TraitementPanel extends JPanel {
     }
     
     private void initUI() {
+   
+
         setLayout(new BorderLayout());
         setBackground(BACKGROUND_COLOR);
 
@@ -98,7 +102,7 @@ public class TraitementPanel extends JPanel {
         searchPanel.setOpaque(false);
         searchPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 5, 20));
 
-        JTextField searchField = new JTextField(20);
+         searchField = new JTextField(20);
         searchField.setFont(MAIN_FONT);
         searchField.setPreferredSize(new Dimension(250, 35));
         searchField.setBorder(BorderFactory.createCompoundBorder(
@@ -109,6 +113,7 @@ public class TraitementPanel extends JPanel {
 
         JButton searchButton = createStyledButton("Rechercher", SECONDARY_COLOR, BUTTON_HOVER);
         searchButton.setPreferredSize(new Dimension(120, 35));
+        searchButton.addActionListener(e->searchVisa());
 
         searchPanel.add(searchField);
         searchPanel.add(searchButton);
@@ -343,6 +348,7 @@ private JPanel createVisasPanel() {
         
         card.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
+                currentCategory = mainCategory;
                 cardLayout.show(mainPanel, mainCategory.replace(" ", "_").toUpperCase());
             }
             public void mouseEntered(MouseEvent e) { card.setBackground(new Color(245, 245, 255)); }
@@ -367,7 +373,7 @@ private JPanel createVisasPanel() {
         addButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
         addButton.setBorder(BorderFactory.createEmptyBorder(8, 20, 8, 20));
         addButton.setFocusPainted(false);
-        addButton.addActionListener(e -> addVisa());
+        addButton.addActionListener(e -> addAction());
         
         header.add(titleLabel, BorderLayout.WEST);
         header.add(addButton, BorderLayout.EAST);
@@ -449,7 +455,7 @@ private JPanel createFormFields(List<String> fields, String key) {
         cancelBtn.setForeground(Color.WHITE);
         cancelBtn.setFont(TITLE_FONT);
         cancelBtn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        cancelBtn.addActionListener(e -> deleteVisa());
+        cancelBtn.addActionListener(e -> deleteAction());
       
         
        btnAdd = createStyledButton("Ajouter", ADD_BUTTON_COLOR, ADD_BUTTON_HOVER);
@@ -1001,6 +1007,44 @@ public void modifyVisaTravail() {
     }
             
             }
+            
+public void searchVisaTravail() {
+    String searchTerm = searchField.getText().trim();
+
+    if (!searchTerm.isEmpty()) {
+        controllerTr.searchVisaTravail(searchTerm);
+    } else {
+        controllerTr.listVisaTravail();
+    }
+}
+
+           public void searchVisaTouristique(){    String searchTerm = searchField.getText().trim();
+
+    if (!searchTerm.isEmpty()) {
+        controllerTs.searchVisaTouristique(searchTerm);
+    } else {
+        controllerTs.listVisaTouristique();
+    }}
+           public void searchVisaAffaires(){   
+               String searchTerm = searchField.getText().trim();
+
+    if (!searchTerm.isEmpty()) {
+        controller.searchVisaAffaires(searchTerm);
+    } else {
+        controller.listVisaAffaires();
+    }}
+           public void searchVisaEtudes(){ 
+               String searchTerm = searchField.getText().trim();
+
+    if (!searchTerm.isEmpty()) {
+        controllerEt.searchVisaEtudes(searchTerm);
+    } else {
+        controllerEt.listVisaEtudes();
+    }}
+            
+            
+            
+            
 
 
 
@@ -1067,10 +1111,51 @@ public void clearForm() {
     }
 }
             
-
+            public void searchVisa(){
+                
+                    switch (currentVisaKey) {
+       case "VISA_TOURISTIQUE" ->searchVisaTouristique();
+       case "VISA_ETUDES"     -> searchVisaEtudes();
+        case "VISA_TRAVAIL"    -> searchVisaTravail();
+        case "VISA_AFFAIRES"   -> searchVisaAffaires();
+        default -> JOptionPane.showMessageDialog(this, "Type de visa inconnu");
+            }
+            
+            }
             
             
 
+            public void addTransport(){}
+            public void addAssurance(){}
+            public void addHebergement(){}
+            public void addVoyage(){}
+            
+            public void deleteTransport(){}
+            public void deleteAssurance(){}
+            public void deleteHebergement(){}
+            public void deleteVoyage(){}
+            
+            public void deleteAction() {
+    switch (currentCategory) {
+        case "VISAS" -> deleteVisa();
+        case "TRANSPORT" -> deleteTransport();
+        case "ASSURANCE" -> deleteAssurance();
+        case "HÉBERGEMENT" -> deleteHebergement();
+        case "VOYAGES" -> deleteVoyage();
+    }
+}
+
+            
+            public void addAction() {
+    switch (currentCategory) {
+        case "VISAS" -> addVisa();
+        case "TRANSPORT" -> addTransport();
+        case "ASSURANCE" -> addAssurance();
+        case "HÉBERGEMENT" -> addHebergement();
+        case "VOYAGES" -> addVoyage();
+        default -> JOptionPane.showMessageDialog(this, "Catégorie inconnue");
+    }
+}
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

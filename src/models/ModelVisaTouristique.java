@@ -181,6 +181,15 @@ public class ModelVisaTouristique extends ModelVisa {
         connection.setAutoCommit(true);
     }
 }
+        
+        
+            
+    public static List<ModelVisa> searchVisaTouristique(String term) throws SQLException {
+    return searchVisa(
+        term,
+        "JOIN visa_touristique vt ON vt.idVisa = v.idVisa"
+    );
+}
     
     
 }

@@ -176,6 +176,68 @@ public class ModelVisa extends ModelTraitement {
         connection.setAutoCommit(true);
     }
 }
+    
+    protected static List<ModelVisa> searchVisa(
+        String term,
+        String specificJoin
+) throws SQLException {
+
+    Connection connection = DataBaseConnection.getConnection();
+    List<ModelVisa> visas = new ArrayList<>();
+
+    String sql =
+        "SELECT t.idTraitement, t.date, t.observation, t.etatTraitement, t.prix, " +
+        "v.pays, " +
+        "c.nomClient, c.prenom AS prenomClient, " +
+        "e.nomEmploye, e.prenomEmploye, " +
+        "p.nom AS nomPartenaire, p.prenom AS prenomPartenaire " +
+        "FROM traitement t " +
+        "JOIN visa v ON v.idVisa = t.idTraitement " +
+        specificJoin + " " +
+        "LEFT JOIN client c ON c.idClient = t.idClient " +
+        "LEFT JOIN employe e ON e.idEmploye = t.idEmploye " +
+        "LEFT JOIN partenariats p ON p.idPartenariat = t.idPartenariat " +
+        "WHERE (" +
+        "c.nomClient LIKE ? OR c.prenom LIKE ? OR " +
+        "e.nomEmploye LIKE ? OR e.prenomEmploye LIKE ? OR " +
+        "p.nom LIKE ? OR p.prenom LIKE ? OR " +
+        "v.pays LIKE ? OR t.etatTraitement LIKE ?" +
+        ")";
+
+    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        String pattern = "%" + term + "%";
+
+        for (int i = 1; i <= 8; i++) {
+            stmt.setString(i, pattern);
+        }
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+
+                String client = rs.getString("nomClient") + " " + rs.getString("prenomClient");
+                String employe = rs.getString("nomEmploye") + " " + rs.getString("prenomEmploye");
+                String partenariat = rs.getString("nomPartenaire") + " " + rs.getString("prenomPartenaire");
+
+                visas.add(new ModelVisa(
+                        rs.getInt("idTraitement"),
+                        rs.getDate("date"),
+                        rs.getString("observation"),
+                        client,
+                        partenariat,
+                        employe,
+                        rs.getString("etatTraitement"),
+                        rs.getDouble("prix"),
+                        rs.getString("pays")
+                ));
+            }
+        }
+    }
+
+    return visas;
+}
+
+
+
 
 }
 

@@ -182,5 +182,13 @@ public static List<ModelVisaTravail> getAllVisaTravail() throws SQLException {
     }
 }
     
+    public static List<ModelVisa> searchVisaTravail(String term) throws SQLException {
+    return searchVisa(
+        term,
+        "JOIN visa_travail vt ON vt.idVisa = v.idVisa"
+    );
+}
+
+    
 
 }
