@@ -13,9 +13,11 @@ import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.lgooddatepicker.components.TimePicker;
 
+
 import controllers.*;
 
 public class TraitementPanel extends JPanel {
+    
     private final Font BUTTON_FONT = new Font("Segoe UI", Font.BOLD, 13);
     private final Color BUTTON_COLOR = new Color(30, 100, 200);
     private final Color BUTTON_HOVER = new Color(50, 120, 220);
@@ -435,11 +437,12 @@ private JPanel createFormFields(List<String> fields, String key) {
         panel.setBackground(BACKGROUND_COLOR);
         panel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
         
-        JButton saveBtn = new JButton("Enregistrer");
-        saveBtn.setBackground(new Color(76, 175, 80));
+        JButton saveBtn = new JButton("modifier");
+        saveBtn.setBackground(ACCENT_COLOR);
         saveBtn.setForeground(Color.WHITE);
         saveBtn.setFont(TITLE_FONT);
         saveBtn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        saveBtn.addActionListener(e ->modifyVisa());
         
         JButton cancelBtn = new JButton("supprimer");
         cancelBtn.setBackground(new Color(220, 53, 69)); 
@@ -461,10 +464,12 @@ private JPanel createFormFields(List<String> fields, String key) {
     JPanel panel = new JPanel(new BorderLayout());
     panel.setBackground(CARD_COLOR);
 
-    String[] columns = {"ID", "Date Traitement", "Client", "Employé", "Partenariat", "État", "Prix", "Pays"};
+    String[] columns = {"ID", "Date Traitement", "Client", "Employé", "Partenariat", "État", "Prix", "Pays", "Observation"
+    };
 
     DefaultTableModel model = new DefaultTableModel(null, columns);
     JTable table = new JTable(model);
+    table.getColumnModel().removeColumn(table.getColumnModel().getColumn(8));
     table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = table.rowAtPoint(evt.getPoint());
@@ -520,6 +525,8 @@ private void populateFormFromSelectedRow(int row) {
                 (JComboBox<?>) currentFieldsMap.get(prefix + "État");
         JTextField txtPays =
                 (JTextField) currentFieldsMap.get(prefix + "Pays");
+        JTextField txtObservation = 
+                (JTextField) currentFieldsMap.get(prefix + "Observation");
 
         // Date
         if (model.getValueAt(row, 1) != null) {
@@ -533,6 +540,7 @@ private void populateFormFromSelectedRow(int row) {
         comboEtat.setSelectedItem(model.getValueAt(row, 5).toString());
         txtPrix.setText(model.getValueAt(row, 6).toString());
         txtPays.setText(model.getValueAt(row, 7).toString());
+        txtObservation.setText(model.getValueAt(row, 8).toString());
 
     } catch (Exception e) {
         JOptionPane.showMessageDialog(
@@ -785,6 +793,217 @@ public void deleteVisaAffaires(){        if (selectedId == -1) {
 
 
 
+   public void modifyVisaTouristique(){
+    if (selectedId == -1) {
+        JOptionPane.showMessageDialog(this,
+                "Veuillez sélectionner un visa à modifier !",
+                "Aucun visa sélectionné",
+                JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    String prefix = "VISA_TOURISTIQUE:";
+
+    try {
+        DatePicker datePicker = (DatePicker) currentFieldsMap.get(prefix + "Date Traitement");
+        JTextField txtClient = (JTextField) currentFieldsMap.get(prefix + "Client (Nom)");
+        JTextField txtEmploye = (JTextField) currentFieldsMap.get(prefix + "Employé (Nom)");
+        JTextField txtPartner = (JTextField) currentFieldsMap.get(prefix + "Partenaire (Nom)");
+        JTextField txtPrix = (JTextField) currentFieldsMap.get(prefix + "Prix");
+        JComboBox<?> comboEtat = (JComboBox<?>) currentFieldsMap.get(prefix + "État");
+        JTextField txtObs = (JTextField) currentFieldsMap.get(prefix + "Observation");
+        JTextField txtPays = (JTextField) currentFieldsMap.get(prefix + "Pays");
+
+        if (txtClient.getText().trim().isEmpty() || txtPays.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Champs obligatoires manquants");
+            return;
+        }
+
+        Double prix = 0.0;
+        try {
+            prix = Double.parseDouble(txtPrix.getText().trim());
+        } catch (Exception ignored) {}
+
+        models.ModelVisaTouristique visa = new models.ModelVisaTouristique(
+                java.sql.Date.valueOf(datePicker.getDate()),
+                txtObs.getText(),
+                txtClient.getText(),
+                txtPartner.getText(),
+                txtEmploye.getText(),
+                comboEtat.getSelectedItem().toString(),
+                prix,
+                txtPays.getText()
+        );
+
+        controllerTs.updateVisaTouristique(selectedId, visa);
+        controllerTs.listVisaTouristique();
+        clearForm();
+
+        JOptionPane.showMessageDialog(this, "Visa Travail modifié avec succès !");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage());
+    }}
+public void modifyVisaTravail() {
+
+    if (selectedId == -1) {
+        JOptionPane.showMessageDialog(this,
+                "Veuillez sélectionner un visa à modifier !",
+                "Aucun visa sélectionné",
+                JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    String prefix = "VISA_TRAVAIL:";
+
+    try {
+        DatePicker datePicker = (DatePicker) currentFieldsMap.get(prefix + "Date Traitement");
+        JTextField txtClient = (JTextField) currentFieldsMap.get(prefix + "Client (Nom)");
+        JTextField txtEmploye = (JTextField) currentFieldsMap.get(prefix + "Employé (Nom)");
+        JTextField txtPartner = (JTextField) currentFieldsMap.get(prefix + "Partenaire (Nom)");
+        JTextField txtPrix = (JTextField) currentFieldsMap.get(prefix + "Prix");
+        JComboBox<?> comboEtat = (JComboBox<?>) currentFieldsMap.get(prefix + "État");
+        JTextField txtObs = (JTextField) currentFieldsMap.get(prefix + "Observation");
+        JTextField txtPays = (JTextField) currentFieldsMap.get(prefix + "Pays");
+
+        if (txtClient.getText().trim().isEmpty() || txtPays.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Champs obligatoires manquants");
+            return;
+        }
+
+        Double prix = 0.0;
+        try {
+            prix = Double.parseDouble(txtPrix.getText().trim());
+        } catch (Exception ignored) {}
+
+        models.ModelVisaTravail visa = new models.ModelVisaTravail(
+                java.sql.Date.valueOf(datePicker.getDate()),
+                txtObs.getText(),
+                txtClient.getText(),
+                txtPartner.getText(),
+                txtEmploye.getText(),
+                comboEtat.getSelectedItem().toString(),
+                prix,
+                txtPays.getText()
+        );
+
+        controllerTr.updateVisaTravail(selectedId, visa);
+        controllerTr.listVisaTravail();
+        clearForm();
+
+        JOptionPane.showMessageDialog(this, "Visa Travail modifié avec succès !");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage());
+    }
+}
+
+         public void modifyVisaEtudes(){
+             
+    if (selectedId == -1) {
+        JOptionPane.showMessageDialog(this,
+                "Veuillez sélectionner un visa à modifier !",
+                "Aucun visa sélectionné",
+                JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    String prefix = "VISA_ETUDES:";
+
+    try {
+        DatePicker datePicker = (DatePicker) currentFieldsMap.get(prefix + "Date Traitement");
+        JTextField txtClient = (JTextField) currentFieldsMap.get(prefix + "Client (Nom)");
+        JTextField txtEmploye = (JTextField) currentFieldsMap.get(prefix + "Employé (Nom)");
+        JTextField txtPartner = (JTextField) currentFieldsMap.get(prefix + "Partenaire (Nom)");
+        JTextField txtPrix = (JTextField) currentFieldsMap.get(prefix + "Prix");
+        JComboBox<?> comboEtat = (JComboBox<?>) currentFieldsMap.get(prefix + "État");
+        JTextField txtObs = (JTextField) currentFieldsMap.get(prefix + "Observation");
+        JTextField txtPays = (JTextField) currentFieldsMap.get(prefix + "Pays");
+
+        if (txtClient.getText().trim().isEmpty() || txtPays.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Champs obligatoires manquants");
+            return;
+        }
+
+        Double prix = 0.0;
+        try {
+            prix = Double.parseDouble(txtPrix.getText().trim());
+        } catch (Exception ignored) {}
+
+        models.ModelVisaEtudes visa = new models.ModelVisaEtudes(
+                java.sql.Date.valueOf(datePicker.getDate()),
+                txtObs.getText(),
+                txtClient.getText(),
+                txtPartner.getText(),
+                txtEmploye.getText(),
+                comboEtat.getSelectedItem().toString(),
+                prix,
+                txtPays.getText()
+        );
+
+        controllerEt.updateVisaEtudes(selectedId, visa);
+        controllerEt.listVisaEtudes();
+        clearForm();
+
+        JOptionPane.showMessageDialog(this, "Visa Travail modifié avec succès !");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage());
+    }
+         }
+            public void modifyVisaAffaires(){
+                                
+    if (selectedId == -1) {
+        JOptionPane.showMessageDialog(this,
+                "Veuillez sélectionner un visa à modifier !",
+                "Aucun visa sélectionné",
+                JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    String prefix = "VISA_AFFAIRES:";
+
+    try {
+        DatePicker datePicker = (DatePicker) currentFieldsMap.get(prefix + "Date Traitement");
+        JTextField txtClient = (JTextField) currentFieldsMap.get(prefix + "Client (Nom)");
+        JTextField txtEmploye = (JTextField) currentFieldsMap.get(prefix + "Employé (Nom)");
+        JTextField txtPartner = (JTextField) currentFieldsMap.get(prefix + "Partenaire (Nom)");
+        JTextField txtPrix = (JTextField) currentFieldsMap.get(prefix + "Prix");
+        JComboBox<?> comboEtat = (JComboBox<?>) currentFieldsMap.get(prefix + "État");
+        JTextField txtObs = (JTextField) currentFieldsMap.get(prefix + "Observation");
+        JTextField txtPays = (JTextField) currentFieldsMap.get(prefix + "Pays");
+
+        if (txtClient.getText().trim().isEmpty() || txtPays.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Champs obligatoires manquants");
+            return;
+        }
+
+        Double prix = 0.0;
+        try {
+            prix = Double.parseDouble(txtPrix.getText().trim());
+        } catch (Exception ignored) {}
+
+        models.ModelVisaAffaires visa = new models.ModelVisaAffaires(
+                java.sql.Date.valueOf(datePicker.getDate()),
+                txtObs.getText(),
+                txtClient.getText(),
+                txtPartner.getText(),
+                txtEmploye.getText(),
+                comboEtat.getSelectedItem().toString(),
+                prix,
+                txtPays.getText()
+        );
+
+        controller.updateVisaAffaires(selectedId, visa);
+        controller.listVisaAffaires();
+        clearForm();
+
+        JOptionPane.showMessageDialog(this, "Visa Travail modifié avec succès !");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage());
+    }
+            
+            }
+
+
+
     private JPanel createEmptyPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(BACKGROUND_COLOR);
@@ -836,6 +1055,21 @@ public void clearForm() {
         default -> JOptionPane.showMessageDialog(this, "Type de visa inconnu");
     }
 }
+        
+            public void modifyVisa() {
+    switch (currentVisaKey) {
+       case "VISA_TOURISTIQUE" ->modifyVisaTouristique();
+       case "VISA_ETUDES"     -> modifyVisaEtudes();
+        case "VISA_TRAVAIL"    -> modifyVisaTravail();
+        case "VISA_AFFAIRES"   -> modifyVisaAffaires();
+        default -> JOptionPane.showMessageDialog(this, "Type de visa inconnu");
+        
+    }
+}
+            
+
+            
+            
 
     
     public static void main(String[] args) {
@@ -849,4 +1083,7 @@ public void clearForm() {
             frame.setVisible(true);
         });
     }
+    
+    
+    
 }

@@ -16,7 +16,7 @@ public class ControllerVisaTouristique {
      public void listVisaTouristique() {
     try {
         List<ModelVisaTouristique> visas = ModelVisaTouristique.getAllVisaTouristique();
-        Object[][] clientData = new Object[visas.size()][8];
+        Object[][] clientData = new Object[visas.size()][9];
         for (int i = 0; i < visas.size(); i++) {
             ModelVisaTouristique visa = visas.get(i);
             clientData[i][0] = visa.getIdTraitement();  
@@ -27,6 +27,7 @@ public class ControllerVisaTouristique {
             clientData[i][5] = visa.getEtat();     // Niveau Fidélité
             clientData[i][6] = visa.getPrix(); 
             clientData[i][7] = visa.getPays(); 
+                clientData[i][8] = visa.getObs(); 
         }
       vue.updateVisaTouristiqueTable(clientData);
 
@@ -56,5 +57,18 @@ listVisaTouristique();
     }
   }
     
+                                 
+                                                         public void updateVisaTouristique(Integer id ,ModelVisaTouristique visa) {
+    try {
+        ModelVisaTouristique.updateVisa(id ,visa);
+       
+      //      vue.showMessage("client updated successfully.");
+            listVisaTouristique(); 
+        
+    } catch (SQLException e) {
+        e.printStackTrace(); 
+     //   vue.showMessage("Error updating client: " + e.getMessage());
+    }
+}
     
 }

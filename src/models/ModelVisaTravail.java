@@ -181,5 +181,6 @@ public static List<ModelVisaTravail> getAllVisaTravail() throws SQLException {
         connection.setAutoCommit(true);
     }
 }
+    
 
 }
